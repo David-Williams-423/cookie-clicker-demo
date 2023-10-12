@@ -25,7 +25,7 @@ class HomeViewModel: ObservableObject {
             }
         }
     }
-    
+
     func addUpgrade(upgrade: Upgrade) {
         if upgrade.price > cookies {
             return
@@ -34,16 +34,16 @@ class HomeViewModel: ObservableObject {
             upgrades.append(upgrade)
         }
     }
-    
+
     private func calculateAdditionalCookies(currentCookies: Int, remainingUpgrades: [Upgrade]) -> Int {
         if remainingUpgrades.isEmpty {
             return currentCookies
         }
-        
+
         let firstUpgrade = remainingUpgrades.first!
-        
+
         let newCookieCount = firstUpgrade.power(currentCookies)
-        
+
         return calculateAdditionalCookies(currentCookies: newCookieCount, remainingUpgrades: Array(remainingUpgrades.dropFirst()))
     }
 }

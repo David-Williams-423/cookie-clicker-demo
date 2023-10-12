@@ -30,7 +30,6 @@ struct ContentView: View {
                         .padding(.vertical)
                     upgradeButton
                 }
-                
             }
         }
     }
@@ -69,8 +68,6 @@ struct ContentView: View {
                 }
             }
         }
-        
-        
     }
 
     var background: some View {

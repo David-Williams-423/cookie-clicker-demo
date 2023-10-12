@@ -10,7 +10,7 @@ import SwiftUI
 struct UpgradeView: View {
     @ObservedObject var vm: HomeViewModel
     let availableUpgrades = Upgrade.upgrades
-    
+
     var body: some View {
         ZStack {
             background
@@ -34,7 +34,6 @@ struct UpgradeView: View {
                             .padding(.horizontal)
                     }
                     .disabled(upgrade.price > vm.cookies)
-                    
                 }
                 Spacer()
             }
