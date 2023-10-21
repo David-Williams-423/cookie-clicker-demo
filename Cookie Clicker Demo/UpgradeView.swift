@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct UpgradeView: View {
-    @ObservedObject var vm: HomeViewModel
-    let availableUpgrades = Upgrade.upgrades
 
     var body: some View {
         ZStack {
@@ -19,22 +17,14 @@ struct UpgradeView: View {
                     .font(.system(size: 40, weight: .heavy))
                     .foregroundStyle(.white)
                 HStack {
-                    Text("Cookies: \(vm.cookies)")
+                    Text("Cookies: 100")
                         .font(.system(size: 30, weight: .heavy))
                         .foregroundStyle(.white)
                     Spacer()
                 }
                 .padding()
-                ForEach(availableUpgrades, id: \.name) { upgrade in
-                    Button {
-                        vm.addUpgrade(upgrade: upgrade)
-                    } label: {
-                        cellView(upgrade: upgrade)
-                            .frame(height: 75)
-                            .padding(.horizontal)
-                    }
-                    .disabled(upgrade.price > vm.cookies)
-                }
+                cellView()
+                cellView()
                 Spacer()
             }
         }
@@ -47,11 +37,10 @@ struct UpgradeView: View {
 }
 
 #Preview {
-    UpgradeView(vm: HomeViewModel())
+    UpgradeView()
 }
 
 struct cellView: View {
-    var upgrade: Upgrade
 
     var body: some View {
         ZStack {
@@ -59,17 +48,17 @@ struct cellView: View {
                 .foregroundStyle(.thinMaterial)
 
             HStack {
-                Image(upgrade.imageString)
+                Image("RollingPin")
                     .padding(.horizontal)
 
                 VStack(alignment: .leading) {
-                    Text(upgrade.name)
+                    Text("Rolling Pin")
                         .font(.title)
-                    Text(upgrade.powerDescription)
+                    Text("Extra 5 cookies per click")
                         .font(.subheadline)
                 }
                 Spacer()
-                Text("\(upgrade.price)")
+                Text("50")
                     .font(.title2).bold()
                     .padding(.horizontal)
             }
