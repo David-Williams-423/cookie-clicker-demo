@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
 
+    @State var cookies: Int = 0
     var body: some View {
             ZStack {
                 background
@@ -16,7 +17,7 @@ struct ContentView: View {
                     Text("Cookie Clicker")
                         .font(.system(size: 40, weight: .heavy))
                         .foregroundStyle(.white)
-                    Text("Cookies: 100")
+                    Text("Cookies: \(cookies)")
                         .font(.largeTitle.bold())
                         .foregroundStyle(.white)
                         .padding(40)
@@ -31,10 +32,15 @@ struct ContentView: View {
     }
 
     var cookie: some View {
-        Image("Cookie")
-            .resizable()
-            .scaledToFit()
-            .shadow(radius: 10)
+        Button {
+            cookies += 1
+        } label: {
+            Image("Cookie")
+                .resizable()
+                .scaledToFit()
+                .shadow(radius: 10)
+        }
+        
     }
 
     var upgradeButton: some View {
