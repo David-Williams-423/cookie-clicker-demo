@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct UpgradeView: View {
-    @ObservedObject var vm: HomeViewModel
-    let availableUpgrades = Upgrade.upgrades
+    @Binding var cookies: Int
+    @Binding var cookiesPerClick: Int
+    
+    let upgrades = [
+        Upgrade(name: "Rolling Pin", price: 10, increase: 2, imageString: "RollingPin"),
+        Upgrade(name: "Extra Hand", price: 20, increase: 5, imageString: "Hand")
+    ]
 
     var body: some View {
         ZStack {
@@ -19,21 +24,21 @@ struct UpgradeView: View {
                     .font(.system(size: 40, weight: .heavy))
                     .foregroundStyle(.white)
                 HStack {
-                    Text("Cookies: \(vm.cookies)")
+                    Text("Cookies: \(cookies)")
                         .font(.system(size: 30, weight: .heavy))
                         .foregroundStyle(.white)
                     Spacer()
                 }
                 .padding()
-                ForEach(availableUpgrades, id: \.name) { upgrade in
+                
+                List(upgrades) { upgrade in
                     Button {
-                        vm.addUpgrade(upgrade: upgrade)
+                        cookies -= upgrade.price
+                        cookiesPerClick += upgrade.increase
                     } label: {
                         cellView(upgrade: upgrade)
-                            .frame(height: 75)
-                            .padding(.horizontal)
                     }
-                    .disabled(upgrade.price > vm.cookies)
+                    
                 }
                 Spacer()
             }
@@ -47,12 +52,13 @@ struct UpgradeView: View {
 }
 
 #Preview {
-    UpgradeView(vm: HomeViewModel())
+    UpgradeView(cookies: .constant(80), cookiesPerClick: .constant(1))
 }
 
 struct cellView: View {
-    var upgrade: Upgrade
 
+    var upgrade: Upgrade
+    
     var body: some View {
         ZStack {
             Rectangle()
@@ -65,7 +71,7 @@ struct cellView: View {
                 VStack(alignment: .leading) {
                     Text(upgrade.name)
                         .font(.title)
-                    Text(upgrade.powerDescription)
+                    Text("\(upgrade.price)")
                         .font(.subheadline)
                 }
                 Spacer()
@@ -77,4 +83,12 @@ struct cellView: View {
         }
         .cornerRadius(20)
     }
+}
+
+struct Upgrade: Identifiable {
+    var id = UUID()
+    var name: String
+    var price: Int
+    var increase: Int
+    var imageString: String
 }

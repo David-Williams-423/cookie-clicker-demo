@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var vm = HomeViewModel()
+    @State var cookies = 0
+    @State var cookiesPerClick = 1
 
     var body: some View {
         NavigationStack {
@@ -18,7 +19,7 @@ struct ContentView: View {
                     Text("Cookie Clicker")
                         .font(.system(size: 40, weight: .heavy))
                         .foregroundStyle(.white)
-                    Text("Cookies: \(vm.cookies)")
+                    Text("Cookies: \(cookies)")
                         .font(.largeTitle.bold())
                         .foregroundStyle(.white)
                         .padding(40)
@@ -26,7 +27,7 @@ struct ContentView: View {
                     cookie
                         .padding(.horizontal)
                     Spacer()
-                    upgrades
+                    
                         .padding(.vertical)
                     upgradeButton
                 }
@@ -36,37 +37,23 @@ struct ContentView: View {
 
     var cookie: some View {
         Button {
-            vm.clickCookie()
+            cookies += cookiesPerClick
         } label: {
             Image("Cookie")
                 .resizable()
                 .scaledToFit()
-                .scaleEffect(vm.cookieScale)
                 .shadow(radius: 10)
         }
     }
 
     var upgradeButton: some View {
-        NavigationLink(destination: UpgradeView(vm: vm)) {
+        NavigationLink(destination: UpgradeView(cookies: $cookies, cookiesPerClick: $cookiesPerClick)) {
             Text("Upgrades")
                 .font(.largeTitle.bold())
                 .foregroundColor(.white)
                 .padding()
                 .background(.thinMaterial)
                 .cornerRadius(20)
-        }
-    }
-
-    var upgrades: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(vm.upgrades, id: \.name) { upgrade in
-                    Image(upgrade.imageString)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 50)
-                }
-            }
         }
     }
 
