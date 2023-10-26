@@ -32,7 +32,7 @@ struct UpgradeView: View {
                 .padding()
 
                 ScrollView {
-                    ForEach(upgrades) { upgrade in
+                    ForEach(upgrades, id: \.name) { upgrade in
 
                         Button {
                             cookies -= upgrade.price
@@ -88,8 +88,7 @@ struct cellView: View {
     }
 }
 
-struct Upgrade: Identifiable {
-    var id = UUID()
+struct Upgrade {
     var name: String
     var price: Int
     var increase: Int
