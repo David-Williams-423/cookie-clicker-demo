@@ -10,7 +10,7 @@ import SwiftUI
 struct UpgradeView: View {
     @Binding var cookies: Int
     @Binding var cookiesPerClick: Int
-    
+
     let upgrades = [
         Upgrade(name: "Rolling Pin", price: 10, increase: 2, imageString: "RollingPin"),
         Upgrade(name: "Extra Hand", price: 20, increase: 5, imageString: "Hand")
@@ -30,16 +30,19 @@ struct UpgradeView: View {
                     Spacer()
                 }
                 .padding()
-                
-                List(upgrades) { upgrade in
-                    Button {
-                        cookies -= upgrade.price
-                        cookiesPerClick += upgrade.increase
-                    } label: {
-                        cellView(upgrade: upgrade)
+
+                ScrollView {
+                    ForEach(upgrades) { upgrade in
+
+                        Button {
+                            cookies -= upgrade.price
+                            cookiesPerClick += upgrade.increase
+                        } label: {
+                            cellView(upgrade: upgrade)
+                        }
                     }
-                    
                 }
+
                 Spacer()
             }
         }
@@ -56,9 +59,8 @@ struct UpgradeView: View {
 }
 
 struct cellView: View {
-
     var upgrade: Upgrade
-    
+
     var body: some View {
         ZStack {
             Rectangle()
@@ -71,7 +73,7 @@ struct cellView: View {
                 VStack(alignment: .leading) {
                     Text(upgrade.name)
                         .font(.title)
-                    Text("\(upgrade.price)")
+                    Text("Price: \(upgrade.price)")
                         .font(.subheadline)
                 }
                 Spacer()

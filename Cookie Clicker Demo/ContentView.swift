@@ -27,7 +27,6 @@ struct ContentView: View {
                     cookie
                         .padding(.horizontal)
                     Spacer()
-                    
                         .padding(.vertical)
                     upgradeButton
                 }
