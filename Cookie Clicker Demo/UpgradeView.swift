@@ -41,6 +41,7 @@ struct UpgradeView: View {
                             cellView(upgrade: upgrade)
                         }
                     }
+                    .padding()
                 }
 
                 Spacer()
