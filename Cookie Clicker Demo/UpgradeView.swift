@@ -74,7 +74,7 @@ struct cellView: View {
                 VStack(alignment: .leading) {
                     Text(upgrade.name)
                         .font(.title)
-                    Text("Price: \(upgrade.price)")
+                    Text("Increase: \(upgrade.increase)")
                         .font(.subheadline)
                 }
                 Spacer()
